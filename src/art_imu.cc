@@ -297,7 +297,7 @@ int main(int argc, char** argv)
     typedef boost::asio::serial_port_base sb;
 
     sb::baud_rate baud_option(baud);
-     sb::flow_control flow_control(sb::flow_control::none);
+    sb::flow_control flow_control(sb::flow_control::none);
     sb::parity parity(sb::parity::none);
     sb::stop_bits stop_bits(sb::stop_bits::one);
 
@@ -317,7 +317,7 @@ int main(int argc, char** argv)
     int kk = 0;
     double vyaw_sum = 0;
     double vyaw_bias = 0;
-    pub = n.advertise<sensor_msgs::Imu>("/imu_data", 1);
+    pub = n.advertise<sensor_msgs::Imu>("data", 1);
     pub_mag = n.advertise<sensor_msgs::MagneticField>("mag", 1);
     pub_gps = n.advertise<sensor_msgs::NavSatFix>("gps", 1);
 
@@ -364,8 +364,8 @@ int main(int argc, char** argv)
                 }
 
                 Eigen::Vector3d ea0((-vyaw_bias-d2f_euler(data + 3)) * M_PI / 180.0,
-                                 0,
-                                  0);
+                                    (vyaw_bias-d2f_euler(data + 7)) * M_PI / 180.0,
+                                    (vyaw_bias-d2f_euler(data + 5)) * M_PI / 180.0);
                 Eigen::Matrix3d R;
                 R = Eigen::AngleAxisd(ea0[0], ::Eigen::Vector3d::UnitZ())
                   * Eigen::AngleAxisd(ea0[1], ::Eigen::Vector3d::UnitY())
