@@ -364,8 +364,8 @@ int main(int argc, char** argv)
                 }
 
                 Eigen::Vector3d ea0((-vyaw_bias-d2f_euler(data + 3)) * M_PI / 180.0,
-                                    (vyaw_bias-d2f_euler(data + 7)) * M_PI / 180.0,
-                                    (vyaw_bias-d2f_euler(data + 5)) * M_PI / 180.0);
+                                    -(vyaw_bias-d2f_euler(data + 7)) * M_PI / 180.0,
+                                    -(vyaw_bias-d2f_euler(data + 5)) * M_PI / 180.0);
                 Eigen::Matrix3d R;
                 R = Eigen::AngleAxisd(ea0[0], ::Eigen::Vector3d::UnitZ())
                   * Eigen::AngleAxisd(ea0[1], ::Eigen::Vector3d::UnitY())
